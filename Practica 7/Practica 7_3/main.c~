@@ -1,0 +1,196 @@
+/* 
+ * File:   main.c
+ * Author: alumno
+ *
+ * Created on 22 de noviembre de 2012, 16:33
+ */
+
+#include <stdio_ext.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+/*
+ * 
+ */
+char CompruebaDNI(char dni[]);
+char CalculaLetraNIF(char dni[]);
+int ConvierteStringAEntero(char dni[]);
+void CreaNif(char dni[],char nif[],char letra);
+
+void main(){
+    
+    char dni[9],validacion,letra,nif[13];
+    
+    do{
+    printf("\nIntroduce dni: ");
+    fflush(stdout);
+    __fpurge(stdin);
+    fgets(dni,9,stdin);
+    
+    
+    
+    validacion=CompruebaDNI(dni);
+    }while(validacion!='s');
+    
+    letra=CalculaLetraNIF(dni);
+    
+    CreaNif(dni,nif,letra);
+    
+    printf("\nDNI: %s\nNIF: %s",dni,nif);
+    
+}
+
+char CompruebaDNI(char dni[]){
+    
+    char validacion;
+    int nan;
+    
+    
+    if(strlen(dni)==8){
+    nan=ConvierteStringAEntero(dni);
+    
+    
+        if(nan>=100000 && nan<=99999999)
+        {
+            validacion='s';
+            printf("\nDNI valido");
+        }
+        else
+        {
+            printf("\nDNI no valido");
+            validacion='n';
+        }
+    }
+    else
+    {
+        printf("\nDNI no valido");
+        validacion='n';
+    }
+    return validacion;
+}
+
+char CalculaLetraNIF(char dni[]){
+    
+    char letra;
+    int numero;
+    
+    numero=ConvierteStringAEntero(dni);
+    
+    numero=numero%23;
+    
+    if(numero==0)
+        letra='T';
+    if(numero==1)
+        letra='R';
+    if(numero==2)
+        letra='W';
+    if(numero==3)
+        letra='A';
+    if(numero==4)
+        letra='G';
+    if(numero==5)
+        letra='M';
+    if(numero==6)
+        letra='Y';
+    if(numero==7)
+        letra='F';
+    if(numero==8)
+        letra='P';
+    if(numero==9)
+        letra='D';
+    if(numero==10)
+        letra='X';
+    if(numero==11)
+        letra='B';
+    if(numero==12)
+        letra='N';
+    if(numero==13)
+        letra='J';
+    if(numero==14)
+        letra='Z';
+    if(numero==15)
+        letra='S';
+    if(numero==16)
+        letra='Q';
+    if(numero==17)
+        letra='V';
+    if(numero==18)
+        letra='H';
+    if(numero==19)
+        letra='L';
+    if(numero==20)
+        letra='C';
+    if(numero==21)
+        letra='K';
+    if(numero==22)
+        letra='E';
+    
+    
+    
+    
+    return letra;
+}
+
+
+int ConvierteStringAEntero(char dni[]){
+    
+    int numero=0,i;
+    int digito;
+    
+    
+    
+    for(i=0;i<8;i++){
+        
+        if(dni[i]=='0')
+            digito=0;
+        if(dni[i]=='1')
+            digito=1;
+        if(dni[i]=='2')
+            digito=2;
+        if(dni[i]=='3')
+            digito=3;
+        if(dni[i]=='4')
+            digito=4;
+        if(dni[i]=='5')
+            digito=5;
+        if(dni[i]=='6')
+            digito=6;
+        if(dni[i]=='7')
+            digito=7;
+        if(dni[i]=='8')
+            digito=8;
+        if(dni[i]=='9')
+            digito=9;
+        
+        
+        
+        numero=numero+digito*pow(10,7-i);
+        
+        
+    }
+    
+    return numero;
+}
+
+void CreaNif(char dni[],char nif[],char letra){
+    
+    int i;
+    strcpy(nif,dni);
+    
+    nif[2]='.';
+    nif[3]=dni[2];
+    nif[4]=dni[3];
+    nif[5]=dni[4];
+    nif[6]='.';
+    nif[7]=dni[5];
+    nif[8]=dni[6];
+    nif[9]=dni[7];
+    nif[10]=' ';
+    nif[11]=letra;
+          
+          
+    
+    
+    
+    
+}
